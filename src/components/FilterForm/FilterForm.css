@@ -1,0 +1,7 @@
+.filter-form {
+  margin-top: 21px;
+  width: 60%;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}

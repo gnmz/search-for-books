@@ -1,0 +1,35 @@
+.search {
+  width: 50%;
+  background-color: #fff;
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+}
+
+.search-input {
+  width: 90%;
+  padding: 5px;
+  outline: none;
+  border: none;
+}
+
+.search-btn {
+  width: 10%;
+  background-color: #fff;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.search-btn:hover {
+  background-color: lightgray;
+}
+
+.search-btn:disabled {
+  background-color: #fff;
+}
+
+.search-btn:active {
+  position: relative;
+  top: 1px;
+}
