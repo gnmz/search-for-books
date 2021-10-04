@@ -11,16 +11,25 @@ interface IResponse{
     }
 }
 
-export const getData = (string:string, maxResult:number) => {
+export const getData = (string:string, maxResult:number, category:string, sort:string ) => {
   return async (dispatch: Dispatch<BooksAction>) => {
     dispatch({ type: BooksActionEnum.START_SEARCH, payload: true });
-  
-        const response:IResponse = await axios.get(`${API_URL}${string}${API_KEY}${API_MAX_RESULT}${maxResult}`)
-        if(response.status === 200){
-            dispatch({ type: BooksActionEnum.START_SEARCH_SUCCESS, payload: response.data.items })
-            dispatch({ type : BooksActionEnum.SET_SEARCH_RESULT, payload: response.data.totalItems })
+        if(category === 'all'){
+            const response:IResponse = await axios.get(`${API_URL}${string}&orderBy=${sort}${API_KEY}${API_MAX_RESULT}${maxResult}`)
+            if(response.status === 200){
+                dispatch({ type: BooksActionEnum.START_SEARCH_SUCCESS, payload: response.data.items })
+                dispatch({ type : BooksActionEnum.SET_SEARCH_RESULT, payload: response.data.totalItems })
+            }
+        }else{
+            const response:IResponse = await axios.get(`${API_URL}${string}+subject:${category}&orderBy=${sort}${API_KEY}${API_MAX_RESULT}${maxResult}`)
+            console.log(response.data.items)
+            if(response.status === 200){
+                dispatch({ type: BooksActionEnum.START_SEARCH_SUCCESS, payload: response.data.items })
+                dispatch({ type : BooksActionEnum.SET_SEARCH_RESULT, payload: response.data.totalItems })
+            }
+    
         }
-
+        
     
   };
 };
@@ -42,5 +51,22 @@ export const inputValueHandler:React.ChangeEventHandler<HTMLInputElement> = (e) 
             dispatch({type: BooksActionEnum.SET_INPUT_VALUE, payload:e.target.value})
         }
         
+    }
+}
+
+export const loadMore = () =>{
+
+}
+
+
+export const sortOnChage:React.ChangeEventHandler<HTMLSelectElement> = (e) => {
+    return (dispatch: Dispatch<BooksAction>) => {
+            dispatch({type: BooksActionEnum.SET_SORT, payload: e.target.value})
+    }
+}
+
+export const categoryOnChange: React.ChangeEventHandler<HTMLSelectElement> = (e) => {
+    return (dispatch: Dispatch<BooksAction>) =>{
+        dispatch({type: BooksActionEnum.SET_CATEGORY, payload: e.target.value})
     }
 }

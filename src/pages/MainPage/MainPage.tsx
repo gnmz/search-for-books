@@ -20,22 +20,20 @@ const MainPage: FC = () => {
     };
   }
 
-  console.log(data)
-
   return (
     <div className="main-page">
       <p className="found-results">Found {searchResult} results</p>
       <div className="books-list"
       >
         {data.map(
-          (item: IBook) => (
-            <Link key={item.id} to={`/${item.id}`} className='book-item-link'>
+          (item: IBook, index) => ( 
+            <Link key={item.id + index} to={`/${item.id}`} className='book-item-link'>
               <BookItem item={item} />
             </Link>
           )
         )}
       </div>
-     
+     <button onClick={()=>console.log('load more')}>Load more</button>
     </div>
   );
 };

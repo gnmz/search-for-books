@@ -7,6 +7,8 @@ const initialState: BooksState = {
   maxReslut: 30,
   book: {},
   inputValue: "",
+  category: 'all',
+  sort: 'newest'
 };
 
 const booksReducer = (
@@ -24,6 +26,10 @@ const booksReducer = (
       return { ...state, book: action.payload };
     case BooksActionEnum.SET_INPUT_VALUE:
       return { ...state, inputValue: action.payload };
+    case BooksActionEnum.SET_SORT:
+      return {...state, sort: action.payload}
+    case BooksActionEnum.SET_CATEGORY:
+      return {...state, category: action.payload}
     default:
       return state;
   }

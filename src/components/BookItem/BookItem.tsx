@@ -9,6 +9,7 @@ interface IBookItemProps {
 const BookItem: FC<IBookItemProps> = ({ item }) => {
   const { volumeInfo } = item;
 
+
   return (
     <div className="book-item">
       {volumeInfo.imageLinks ? (
