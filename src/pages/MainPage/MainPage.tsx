@@ -2,7 +2,9 @@ import React, { FC } from "react";
 import { Link } from "react-router-dom";
 import BookItem from "../../components/BookItem/BookItem";
 import Loader from "../../components/Loader/Loader";
+import LoadError from "../../components/LoadError/LoadError";
 import LoadMoreBtn from "../../components/LoadMoreBtn/LoadMoreBtn";
+import NotFound from "../../components/NotFound/NotFound";
 
 import { useTypedSelector } from "../../hooks/useTypedSelector";
 
@@ -27,11 +29,11 @@ const MainPage: FC = () => {
 
 
   if (error.length > 0) {
-    return <div>{error}</div>;
+    return <div className="main-page"><LoadError message={error} /></div>;
   }
 
   if (!data) {
-    return <div>Ничего не найдено</div>;
+    return <div className="main-page"><NotFound /></div>;
   }
 
 

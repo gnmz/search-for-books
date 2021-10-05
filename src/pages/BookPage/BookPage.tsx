@@ -1,6 +1,8 @@
 import React, { FC, useEffect } from "react";
 import { useParams } from "react-router";
 import Loader from "../../components/Loader/Loader";
+import LoadError from "../../components/LoadError/LoadError";
+import NotFound from "../../components/NotFound/NotFound";
 import { useAction } from "../../hooks/useAction";
 import { useTypedSelector } from "../../hooks/useTypedSelector";
 
@@ -22,7 +24,7 @@ const BookPage: FC = () => {
   }
 
   if(error.length > 0){
-    return<div style={{display:'flex', flexDirection:'column', alignItems:'center'}}>{error}</div>
+    return<div style={{display:'flex', flexDirection:'column', alignItems:'center'}}><LoadError message={error} /></div>
   }
 
   if(volumeInfo){
@@ -45,7 +47,7 @@ const BookPage: FC = () => {
  
   return <div style={{display:'flex', flexDirection:'column', alignItems:'center'}}
   
-  >Not found</div>
+  ><NotFound /></div>
   
 };
 
