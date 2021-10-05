@@ -1,0 +1,39 @@
+.select-options {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.select-options-title {
+  color: #fff;
+  margin-right: 5px;
+}
+
+.select-options-list {
+  width: 200px;
+  padding: 3px 0 3px 5px;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: #878787;
+}
+
+@media screen and (min-width: 320px) and (max-width: 767px) {
+  .select-options {
+    margin-bottom: 5px;
+    width: 100%;
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  .select-options {
+    margin-bottom: 5px;
+    width: 100%;
+  }
+}
+
+@media screen and (min-width: 320px) and (max-width: 555px) {
+  .select-options-list {
+    width: 60%;
+  }
+}

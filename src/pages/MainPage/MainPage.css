@@ -17,6 +17,12 @@
   font-weight: 500;
 }
 
+.main-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 @media screen and (min-width: 320px) and (max-width: 767px) {
   .books-list {
     display: grid;

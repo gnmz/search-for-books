@@ -1,5 +1,6 @@
 import React, { FC, useState } from "react";
 import { useAction } from "../../hooks/useAction";
+import SelectOptions from "../SelectOptions/SelectOptions";
 
 import "./FilterForm.css";
 
@@ -23,26 +24,12 @@ const FilterForm: FC = () => {
 
   return (
     <div className="filter-form">
-      <label style={{ color: "#fff" }}>
-        Categories
-        <select onChange={categoryOnChange} defaultValue="all">
-          {categoryList.map(({ id, value }) => (
-            <option key={id} value={value}>
-              {value}
-            </option>
-          ))}
-        </select>
-      </label>
-      <label style={{ color: "#fff" }}>
-        Sorting by
-        <select onChange={sortOnChage} defaultValue="relevance">
-          {sortList.map(({ id, value }) => (
-            <option key={id} value={value}>
-              {value}
-            </option>
-          ))}
-        </select>
-      </label>
+      <SelectOptions
+        list={categoryList}
+        change={categoryOnChange}
+        title="Categories"
+      />
+      <SelectOptions list={sortList} change={sortOnChage} title="Sorting By" />
     </div>
   );
 };

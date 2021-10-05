@@ -13,20 +13,29 @@ interface IResponse{
 
 export const getData = (string:string, maxResult:number, category:string, sort:string ) => {
   return async (dispatch: Dispatch<BooksAction>) => {
-    dispatch({ type: BooksActionEnum.START_SEARCH, payload: true });
+    dispatch({ type: BooksActionEnum.START_LOADING, payload: true });
         if(category === 'all'){
-            const response:IResponse = await axios.get(`${API_URL}${string}&orderBy=${sort}${API_KEY}${API_MAX_RESULT}${maxResult}`)
-            if(response.status === 200){
-                dispatch({ type: BooksActionEnum.START_SEARCH_SUCCESS, payload: response.data.items })
-                dispatch({ type : BooksActionEnum.SET_SEARCH_RESULT, payload: response.data.totalItems })
+            try {
+                const response:IResponse = await axios.get(`${API_URL}${string}&orderBy=${sort}${API_KEY}${API_MAX_RESULT}${maxResult}`)
+                if(response.status === 200){
+                    dispatch({ type: BooksActionEnum.START_SEARCH_SUCCESS, payload: response.data.items })
+                    dispatch({ type : BooksActionEnum.SET_SEARCH_RESULT, payload: response.data.totalItems })
+                }    
+            } catch (error) {
+                dispatch({type: BooksActionEnum.SET_LOADING_ERROR, payload: 'Произошла ошибка при загрузке'})
             }
+            
         }else{
-            const response:IResponse = await axios.get(`${API_URL}${string}+subject:${category}&orderBy=${sort}${API_KEY}${API_MAX_RESULT}${maxResult}`)
-            console.log(response.data.items)
-            if(response.status === 200){
-                dispatch({ type: BooksActionEnum.START_SEARCH_SUCCESS, payload: response.data.items })
-                dispatch({ type : BooksActionEnum.SET_SEARCH_RESULT, payload: response.data.totalItems })
+            try {
+                const response:IResponse = await axios.get(`${API_URL}${string}+subject:${category}&orderBy=${sort}${API_KEY}${API_MAX_RESULT}${maxResult}`)
+                if(response.status === 200){
+                    dispatch({ type: BooksActionEnum.START_SEARCH_SUCCESS, payload: response.data.items })
+                    dispatch({ type : BooksActionEnum.SET_SEARCH_RESULT, payload: response.data.totalItems })
+                }
+            } catch (error) {
+                dispatch({type: BooksActionEnum.SET_LOADING_ERROR, payload: 'Произошла ошибка при загрузке'})
             }
+           
     
         }
         
@@ -36,26 +45,63 @@ export const getData = (string:string, maxResult:number, category:string, sort:s
 
 export const getBook = (id:string) => {
     return async(dispatch: Dispatch<BooksAction>) => {
-        const response = await axios.get(`${BOOK_API}${id}?${API_KEY}`)
-        dispatch({type:BooksActionEnum.SET_BOOK , payload: response.data }) 
-    }
-}
-
-export const inputValueHandler:React.ChangeEventHandler<HTMLInputElement> = (e) =>{
-    return (dispatch: Dispatch<BooksAction>) =>{
-        
-        if(e.target.value === ''){
-            localStorage.setItem('input', '')
-            dispatch({type: BooksActionEnum.SET_INPUT_VALUE, payload:e.target.value})
-        }else{
-            dispatch({type: BooksActionEnum.SET_INPUT_VALUE, payload:e.target.value})
+        dispatch({ type: BooksActionEnum.START_LOADING, payload: true });
+        try {
+            const response = await axios.get(`${BOOK_API}${id}?${API_KEY}`)
+            dispatch({type:BooksActionEnum.SET_BOOK , payload: response.data })     
+        } catch (error) {
+            dispatch({type:BooksActionEnum.SET_LOADING_ERROR, payload: 'Произошла ошибка при загрузке'})
         }
         
     }
 }
 
-export const loadMore = () =>{
+export const inputValueHandler:React.ChangeEventHandler<HTMLInputElement> = (e) =>{
+    return (dispatch: Dispatch<BooksAction>) =>{
+        dispatch({type: BooksActionEnum.SET_INPUT_VALUE, payload:e.target.value})       
+    }
+}
 
+export const setSearchValue = (value:string) => {
+    return (dispatch: Dispatch<BooksAction>) => {
+        if(value){
+            dispatch({type: BooksActionEnum.SET_INPUT_VALUE, payload: value})
+        }
+    }
+}
+
+export const loadMore =  (startIndex:number, maxResult:number, string:string, category:string, sort:string ) => {
+    return async (dispatch: Dispatch<BooksAction>) => {
+        dispatch({ type: BooksActionEnum.START_LOADING, payload: true });
+        if(category === 'all'){
+            try {
+                const response:IResponse = await axios.get(`${API_URL}${string}&orderBy=${sort}${API_KEY}&startIndex=${startIndex}${API_MAX_RESULT}${maxResult}`)
+                if(response.status === 200){
+                    dispatch({ type: BooksActionEnum.LOAD_MORE, payload: response.data.items })
+                }else{
+                    dispatch({type:BooksActionEnum.SET_LOADING_ERROR, payload: 'Произошла ошибка при загрузке'})
+                }    
+            } catch (error) {
+                dispatch({type:BooksActionEnum.SET_LOADING_ERROR, payload: 'Произошла ошибка при загрузке'})
+            }
+            
+        }else{
+            try {
+                const response:IResponse = await axios.get(`${API_URL}${string}+subject:${category}&orderBy=${sort}${API_KEY}&startIndex=${startIndex}${API_MAX_RESULT}${maxResult}`)
+                if(response.status === 200){
+                    dispatch({type: BooksActionEnum.LOAD_MORE, payload: response.data.items })
+                }else{
+                    dispatch({type:BooksActionEnum.SET_LOADING_ERROR, payload: 'Произошла ошибка при загрузке'})
+                }
+            } catch (error) {
+                dispatch({type:BooksActionEnum.SET_LOADING_ERROR, payload: 'Произошла ошибка при загрузке'})
+            }
+          
+    
+        }
+
+        
+    }
 }
 
 
@@ -68,5 +114,18 @@ export const sortOnChage:React.ChangeEventHandler<HTMLSelectElement> = (e) => {
 export const categoryOnChange: React.ChangeEventHandler<HTMLSelectElement> = (e) => {
     return (dispatch: Dispatch<BooksAction>) =>{
         dispatch({type: BooksActionEnum.SET_CATEGORY, payload: e.target.value})
+    }
+}
+
+
+export const setMaxResult = (number:number) => {
+    return(dispatch: Dispatch<BooksAction>) => {
+        dispatch({type: BooksActionEnum.SET_MAX_RESULT, payload: number})
+    }
+}
+
+export const setStartIndex = (number:number) => {
+    return (dispatch: Dispatch<BooksAction>) => {
+        dispatch({type: BooksActionEnum.SET_START_INDEX, payload: number})
     }
 }
