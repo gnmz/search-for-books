@@ -1,6 +1,38 @@
-# Getting Started with Create React App
+# Search for books with Google Books API.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Функционал
+
+✔️ Поиск по введеным в текстовое поле данным. Триггер поиска нажатие Enter или нажатие кнопки поиска.
+
+✔️ Фильтрация поискового запроса по категорям: all (выбрано изначально), art, biography, computers, history, medical, poetry,
+
+✔️ Сортировка поискового запроса по двум вариантам: relevance (выбран изначально) , newest.
+
+✔️ Над блоком с карточками отображается количество найденных по запросу книг.
+
+✔️ Пагинация реализована по принципу 'load more'. Ниже блока с карточками находится кнопка 'Load more', по клику на нее к уже загруженным книгам подгружаются еще. Шаг пагинации - 30.
+
+✔️ При клике на карточку происходит переход на детальную страницу книги, на которой выводятся ее данные: изображение обложки,     название, все категории, все авторы, описание.
+
+✔️ Адаптивная верстка 
+
+## Реализация
+
+Приложение создано с помощью npx create-react-app . --template typescript
+
+Установлено доплнительно:
+
+axios - для работы с API
+
+react-router-dom - для маршрутизации
+
+redux - для работы redux
+
+react-redux - для работы react с redux
+
+redux-thunk - для асинхронных запросов
+
+@types/react-redux @types/react-router-dom @types/redux-thunk - типы для TypeScript
 
 ## Available Scripts
 
@@ -28,19 +60,3 @@ The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
