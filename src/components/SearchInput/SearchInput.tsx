@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import { useHistory, useLocation } from "react-router";
 import { useAction } from "../../hooks/useAction";
 import { useTypedSelector } from "../../hooks/useTypedSelector";
@@ -15,10 +15,12 @@ const SearchInput: FC = () => {
   const history = useHistory();
   const location = useLocation();
 
+  const [isFocus, setIsFocus] = useState(false)
+
   const searchDataHandler: React.KeyboardEventHandler<HTMLInputElement> = (
     e
   ) => {
-    if (e.key === "Enter" && inputValue) {
+    if (e.key === "Enter" && inputValue && isFocus) {
       let value = inputValue;
       if (location.pathname !== "/") {
         history.push("/");
@@ -51,6 +53,8 @@ const SearchInput: FC = () => {
         className="search-input"
         value={inputValue}
         onChange={inputValueHandler}
+        onFocus={()=>setIsFocus(true)}
+        onBlur={()=>setIsFocus(false)}
         onKeyDown={searchDataHandler}
         placeholder="Search..."
       />
